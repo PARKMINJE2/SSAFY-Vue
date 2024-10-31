@@ -9,30 +9,22 @@
 
 <body>
   <div id="app">
-    <p>반응형 변수: {{ reactiveValue }}</p>
-    <p>일반 변수: {{ normalValue }}</p>
-    <button v-on:click="updateValues">값 업데이트</button>
+    <h1>{{ message }}</h1>
   </div>
-
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script>
     const { createApp, ref } = Vue
 
     const app = createApp({
       setup() {
-        const reactiveValue = ref(0)
-        let normalValue = 0
-        const updateValues = function() {
-          reactiveValue.value++
-          normalValue++
-        }
+        const message = ref('Bye, Vue 3! ')
+
         return {
-          reactiveValue,
-          normalValue,  // 추적이 되지않을 뿐, 함께 증가하고있음.
-          updateValues
+          message
         }
       }
     })
+
 
     app.mount('#app')
   </script>

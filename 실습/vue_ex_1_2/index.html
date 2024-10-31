@@ -9,9 +9,9 @@
 
 <body>
   <div id="app">
-    <p>반응형 변수: {{ reactiveValue }}</p>
-    <p>일반 변수: {{ normalValue }}</p>
-    <button v-on:click="updateValues">값 업데이트</button>
+    <h1>{{ count }}</h1>
+    <button v-on:click="count++">+</button>
+    <button v-on:click="count--">-</button>
   </div>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -20,20 +20,20 @@
 
     const app = createApp({
       setup() {
-        const reactiveValue = ref(0)
-        let normalValue = 0
-        const updateValues = function() {
-          reactiveValue.value++
-          normalValue++
+        const count = ref(0)
+        const increment = function () {
+          count.value++
+        }
+        const decrement = function () {
+          count.value--
         }
         return {
-          reactiveValue,
-          normalValue,  // 추적이 되지않을 뿐, 함께 증가하고있음.
-          updateValues
+          count,
+          increment,
+          decrement
         }
       }
     })
-
     app.mount('#app')
   </script>
 </body>
