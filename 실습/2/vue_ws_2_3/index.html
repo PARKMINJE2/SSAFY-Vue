@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .is-selected {
+      background-color: #eee;
+    }
+    .is-required {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>다양한 전시 정보</h1>
+    <hr>
+    <ul>
+      <li :class="{ 'is-selected': isSelected }">
+        <label for="selected">전시 선택</label>
+        <input type="checkbox" name="selected" id="selected" v-model="isSelected">
+        <h3>한글 제목</h3>
+        <p>전시 정보 설명</p>
+        <hr>
+        <p>전시 위치</p>
+        <a href="전시장 링크">전시장 바로가기</a>
+        <hr>
+        <p>입장권 구매하기</p>
+        <div>
+          <span :class="{ 'is-required': nums <= 0 }">인원 수 : {{ nums }} 명</span>
+          <button @click="decreaseNum">-</button>
+          <button @click="increaseNum">+</button>
+        </div>
+        <p>총 입장료 : {{ bills }} 원</p>
+        <hr>
+      </li>
+    </ul>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref } = Vue
+
+    const app = createApp({
+      setup() {
+        const isSelected = ref(false)
+
+        const nums = ref(0)
+        const bills = ref(0)
+        const ticketPrice = 1000
+
+        const decreaseNum = () => {
+          if (nums.value > 0) {
+            nums.value -= 1
+            bills.value -= ticketPrice
+          }
+        }
+        const increaseNum = () => {
+          nums.value += 1
+          bills.value += ticketPrice
+        }
+
+        return {
+          isSelected,
+          nums,
+          bills,
+          increaseNum,
+          decreaseNum
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+</html>
