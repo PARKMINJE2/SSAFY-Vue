@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h2>남은 할 일</h2>
+
+    <p>{{ todos.length > 0 ? '아직 남았다.' : '퇴근!' }}</p>
+    <p>{{ restOfTodos }}</p>
+    <p>{{ getRestOfTodos() }}</p> <!-- (method는 '호출'해야 반환값이 나옴) -->
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp, ref, computed } = Vue
+
+    const app = createApp({
+      setup() {
+        const todos = ref([
+          { text: 'Vue 실습' },
+          { text: '자격증 공부' },
+          { text: 'TIL 작성' }
+        ])
+        
+        // 1. computed
+        const restOfTodos = computed(() => {
+          return todos.value.length > 0 ? '아직 남았다.' : '퇴근!'
+        })
+        // console.log(restOfTodos.value) // 아직 남았다.
+
+
+        // 2. method (method는 호출해야 반환값이 나옴. 소괄호)
+        const getRestOfTodos = function () {
+          return todos.value.length > 0 ? '아직 남았다.' : '퇴근!'
+        }
+
+        // computed 주의사항
+        // '이미 정해진 값'이기 때문에 변경하려고 해선 안된다.
+        const a = ref(0)
+        const abc = computed(() => {
+          return a.value + 1
+        })
+        console.log(abc.value) // 1
+        // computed는 '읽기 전용'이기 때문에 아래 코드는 경고가 발생한다.
+        // 변화가 일어나지 않을뿐더러 오류가 출력됨.
+        // Write operation failed: computed value is readonly
+        console.log(abc.value++) // 1
+
+
+        return {
+          todos,
+          restOfTodos,
+          getRestOfTodos
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+
+</html>
